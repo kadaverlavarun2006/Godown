@@ -29,7 +29,16 @@ const {
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:3000',
+        'http://localhost:64713',
+        'https://logease.vercel.app',               // your Vercel URL
+        'https://logease-git-main-USERNAME.vercel.app' // Vercel preview URL
+    ],
+    credentials: true
+}));
+
 app.use(express.json());
 
 
