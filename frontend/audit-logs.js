@@ -1,4 +1,9 @@
-const auditApi = 'http://localhost:5000/api/audit-logs';
+const API_BASE = (typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.apiBase)
+    ? AUTH_CONFIG.apiBase
+    : ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.hostname)
+        ? 'http://localhost:5000/api'
+        : 'https://godown-backend-b3e9.onrender.com/api');
+const auditApi = `${API_BASE}/audit-logs`;
 const auditTable = document.querySelector('#audit-table');
 const auditMessage = document.querySelector('#audit-message');
 const auditFrom = document.querySelector('#audit-from');

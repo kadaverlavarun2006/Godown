@@ -1,4 +1,9 @@
-const invoicesApi = 'http://localhost:5000/api/invoices';
+const API_BASE = (typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.apiBase)
+    ? AUTH_CONFIG.apiBase
+    : ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.hostname)
+        ? 'http://localhost:5000/api'
+        : 'https://godown-backend-b3e9.onrender.com/api');
+const invoicesApi = `${API_BASE}/invoices`;
 const invoiceSearch = document.querySelector('#invoice-search');
 const invoiceTableBody = document.querySelector('#invoice-table-body');
 const listMessage = document.querySelector('#invoice-list-message');
@@ -159,7 +164,7 @@ exportExcel.addEventListener('click', async() => {
 
     exportExcel.disabled = true;
     try {
-        const response = await fetch(`http://localhost:5000/api/exports/invoices.xlsx?${params.toString()}`);
+        const response = await fetch(`${API_BASE}/exports/invoices.xlsx?${params.toString()}`);
         if (!response.ok) throw new Error('Unable to export invoices');
         const blob = await response.blob();
         const link = document.createElement('a');

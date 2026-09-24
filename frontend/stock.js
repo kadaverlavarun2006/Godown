@@ -1,5 +1,10 @@
-const stockApi = 'http://localhost:5000/api/stock';
-const productsApi = 'http://localhost:5000/api/products';
+const API_BASE = (typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.apiBase)
+    ? AUTH_CONFIG.apiBase
+    : ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.hostname)
+        ? 'http://localhost:5000/api'
+        : 'https://godown-backend-b3e9.onrender.com/api');
+const stockApi = `${API_BASE}/stock`;
+const productsApi = `${API_BASE}/products`;
 const stockForm = document.querySelector('#stock-form');
 const productSelect = document.querySelector('#product');
 const stockDate = document.querySelector('#stock-date');

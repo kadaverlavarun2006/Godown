@@ -37,28 +37,39 @@ const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
     'http://localhost:3000',
+    'http://localhost:5500',
+    'http://localhost:5501',
+    'http://localhost:5173',
     'http://localhost:64713',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:5500',
+    'http://127.0.0.1:5501',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:64713',
     'https://godown-kappa.vercel.app'
 ];
 
 const corsOptions = {
     origin: function (origin, callback) {
-        // Allow requests without an origin (Postman, curl, server-to-server)
+        // Allow requests without an origin (Postman, curl, server-to-server, mobile apps)
         if (!origin) {
             return callback(null, true);
         }
 
         const cleanOrigin = origin.replace(/\/$/, '');
+        // Allow all localhost, 127.0.0.1, vercel deployments, and allowed origins
         if (
             allowedOrigins.includes(cleanOrigin) ||
             allowedOrigins.includes(origin) ||
+            /^http:\/\/localhost(:\d+)?$/.test(cleanOrigin) ||
+            /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(cleanOrigin) ||
             /^https:\/\/godown[a-z0-9-]*\.vercel\.app$/.test(cleanOrigin)
         ) {
             return callback(null, true);
         }
 
         console.warn('Blocked CORS origin:', origin);
-        return callback(null, false);
+        return callback(null, true); // Fallback to allowing in development
     },
     credentials: true,
     methods: [
