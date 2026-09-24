@@ -27,31 +27,79 @@ const {
 } = require('./middleware/auth');
 
 const app = express();
+
 const port = process.env.PORT || 5000;
 
+
+// ======================================================
+// CORS
+// ======================================================
+
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:64713',
+    'https://godown-kappa.vercel.app'
+];
+
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'http://localhost:64713',
-        'https://godown-kappa.vercel.app/',         
-        'https://godown-kappa.vercel.app/login.html?redirect=index.html' 
+    origin: function (origin, callback) {
+
+        // Allow requests without an origin
+        // Example: Postman, server-to-server requests
+        if (!origin) {
+            return callback(null, true);
+        }
+
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+
+        console.log('Blocked CORS origin:', origin);
+
+        return callback(
+            new Error('Not allowed by CORS')
+        );
+    },
+
+    credentials: true,
+
+    methods: [
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE',
+        'OPTIONS'
     ],
-    credentials: true
+
+    allowedHeaders: [
+        'Content-Type',
+        'Authorization'
+    ]
 }));
+
+
+// Handle CORS preflight requests
+app.options('*', cors());
+
+
+// ======================================================
+// BODY PARSER
+// ======================================================
 
 app.use(express.json());
 
 
-// =========================
+// ======================================================
 // PUBLIC AUTH ROUTES
-// =========================
+// ======================================================
 
 app.use('/api/auth', authRoutes);
 
 
-// =========================
+// ======================================================
 // HEALTH CHECK
-// =========================
+// ======================================================
 
 app.get('/api/health', (req, res) => {
 
@@ -61,35 +109,69 @@ app.get('/api/health', (req, res) => {
     res.json({
         status: 'success',
         backend: 'connected',
-        database: databaseConnected ? 'connected' : 'disconnected'
+        database: databaseConnected
+            ? 'connected'
+            : 'disconnected'
     });
 });
 
 
-// =========================
+// ======================================================
 // ADMIN ONLY ROUTES
-// =========================
+// ======================================================
 
-app.use('/api/dashboard', requireAdmin, dashboardRoutes);
+app.use(
+    '/api/dashboard',
+    requireAdmin,
+    dashboardRoutes
+);
 
-app.use('/api/stock', requireAdmin, stockRoutes);
+app.use(
+    '/api/stock',
+    requireAdmin,
+    stockRoutes
+);
 
-app.use('/api/drivers', requireAdmin, driverRoutes);
+app.use(
+    '/api/drivers',
+    requireAdmin,
+    driverRoutes
+);
 
-app.use('/api/vehicles', requireAdmin, vehicleRoutes);
+app.use(
+    '/api/vehicles',
+    requireAdmin,
+    vehicleRoutes
+);
 
-app.use('/api/retailers', requireAdmin, retailerRoutes);
+app.use(
+    '/api/retailers',
+    requireAdmin,
+    retailerRoutes
+);
 
-app.use('/api/reports', requireAdmin, reportRoutes);
+app.use(
+    '/api/reports',
+    requireAdmin,
+    reportRoutes
+);
 
-app.use('/api/exports', requireAdmin, exportRoutes);
+app.use(
+    '/api/exports',
+    requireAdmin,
+    exportRoutes
+);
 
-app.use('/api/audit-logs', requireAdmin, auditRoutes);
+app.use(
+    '/api/audit-logs',
+    requireAdmin,
+    auditRoutes
+);
 
 
-// =========================
+// ======================================================
 // ROLE BASED ROUTES
-// =========================
+// ======================================================
 
 app.use(
     '/api/products',
@@ -99,7 +181,11 @@ app.use(
 
 app.use(
     '/api/deliveries',
-    requireAnyRole('ADMIN', 'RETAILER', 'DRIVER'),
+    requireAnyRole(
+        'ADMIN',
+        'RETAILER',
+        'DRIVER'
+    ),
     deliveryRoutes
 );
 
@@ -110,9 +196,9 @@ app.use(
 );
 
 
-// =========================
+// ======================================================
 // 404 API HANDLER
-// =========================
+// ======================================================
 
 app.use('/api/*splat', (req, res) => {
 
@@ -120,13 +206,12 @@ app.use('/api/*splat', (req, res) => {
         status: 'error',
         message: 'API endpoint not found'
     });
-
 });
 
 
-// =========================
+// ======================================================
 // ERROR HANDLER
-// =========================
+// ======================================================
 
 app.use((error, req, res, next) => {
 
@@ -143,38 +228,89 @@ app.use((error, req, res, next) => {
         });
     }
 
+    // CORS error
+    if (error.message === 'Not allowed by CORS') {
+        return res.status(403).json({
+            status: 'error',
+            message: 'CORS origin not allowed'
+        });
+    }
+
     res.status(500).json({
         status: 'error',
         message: 'Internal server error'
     });
-
 });
 
 
-// =========================
+// ======================================================
 // START SERVER
-// =========================
+// ======================================================
 
-// Start listening immediately - don't block on DB
-app.listen(port, '0.0.0.0', () => {
-    console.log(`LogEase backend is running on port ${port}`);
-});
+app.listen(
+    port,
+    '0.0.0.0',
+    () => {
+        console.log(
+            `LogEase backend is running on port ${port}`
+        );
+    }
+);
 
-// Connect to MongoDB with retry logic (non-blocking)
-const connectWithRetry = async (retries = 5, delay = 3000) => {
+
+// ======================================================
+// MONGODB CONNECTION WITH RETRY
+// ======================================================
+
+const connectWithRetry = async (
+    retries = 5,
+    delay = 3000
+) => {
+
     for (let i = 1; i <= retries; i++) {
+
         try {
+
             await connectDB();
-            console.log('MongoDB connected successfully');
+
+            console.log(
+                'MongoDB connected successfully'
+            );
+
             return;
+
         } catch (error) {
-            console.error(`MongoDB connection attempt ${i}/${retries} failed: ${error.message}`);
+
+            console.error(
+                `MongoDB connection attempt ${i}/${retries} failed: ${error.message}`
+            );
+
             if (i < retries) {
-                console.log(`Retrying in ${delay / 1000}s...`);
-                await new Promise(resolve => setTimeout(resolve, delay));
+
+                console.log(
+                    `Retrying in ${delay / 1000}s...`
+                );
+
+                await new Promise(
+                    resolve => setTimeout(
+                        resolve,
+                        delay
+                    )
+                );
+
             } else {
-                console.error('All MongoDB connection attempts failed. The server is running but DB features will not work.');
-                console.error('Please check your MONGO_URI and MongoDB Atlas Network Access settings.');
+
+                console.error(
+                    'All MongoDB connection attempts failed.'
+                );
+
+                console.error(
+                    'The server is running but DB features will not work.'
+                );
+
+                console.error(
+                    'Check MONGO_URI and MongoDB Atlas Network Access.'
+                );
             }
         }
     }
