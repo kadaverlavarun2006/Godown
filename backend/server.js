@@ -76,7 +76,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 
 
 // ======================================================
@@ -196,8 +195,7 @@ app.use(
 // 404 API HANDLER
 // ======================================================
 
-app.use('/api/*splat', (req, res) => {
-
+app.use('/api', (req, res) => {
     res.status(404).json({
         status: 'error',
         message: 'API endpoint not found'
