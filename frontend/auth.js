@@ -1,10 +1,9 @@
 // LogEase Authentication & Role-Based Access Control Utility (ADMIN & RETAILER)
 
 const AUTH_CONFIG = {
-    // Update 'logease-backend.onrender.com' to your actual Render service name
     apiBase: window.location.hostname === 'localhost'
         ? 'http://localhost:5000/api'
-        : 'https://logease-backend.onrender.com/api',
+        : 'https://godown-backend-b3e9.onrender.com/api',
     tokenKey: 'logease_token',
     userKey: 'logease_user'
 };

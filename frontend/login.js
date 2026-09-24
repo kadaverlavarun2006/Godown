@@ -1,9 +1,10 @@
 // LogEase Administrator Login Logic
 
-// Update 'logease-backend.onrender.com' to your actual Render service name after deployment
+// Render backend URL
 const LOGIN_API = window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
-    : 'https://logease-backend.onrender.com';
+    : 'https://godown-backend-b3e9.onrender.com';
+
 
 
 const loginForm = document.querySelector('#login-form');
@@ -48,54 +49,54 @@ const handleLogin = async (e) => {
             body: JSON.stringify({ email, password })
         });
 
-            const data = await response.json();
+        const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.message || 'Login failed. Please verify your credentials.');
-            }
-
-            if (!data.user || !['ADMIN', 'RETAILER', 'DRIVER'].includes(data.user.role)) {
-                throw new Error('Access Denied: You do not have permission to access this portal.');
-            }
-
-            // Store authentication credentials
-            setAuth(data.token, data.user);
-
-            const role = data.user.role;
-            let welcomeText = `Welcome, Administrator ${data.user.name}! Redirecting to Dashboard...`;
-            let redirectPage = 'index.html';
-
-            if (role === 'RETAILER') {
-                welcomeText = `Welcome, ${data.user.name}! Redirecting to Retailer Portal...`;
-                const params = new URLSearchParams(window.location.search);
-                const redirectParam = params.get('redirect');
-                const allowedRetailerPages = ['retailer-portal.html', 'products.html'];
-                if (redirectParam && allowedRetailerPages.includes(redirectParam.split('?')[0])) {
-                    redirectPage = redirectParam;
-                } else {
-                    redirectPage = 'retailer-portal.html';
-                }
-            } else if (role === 'DRIVER') {
-                welcomeText = `Welcome, Driver ${data.user.name}! Redirecting to Driver Portal...`;
-                redirectPage = 'driver-portal.html';
-            } else {
-                const params = new URLSearchParams(window.location.search);
-                redirectPage = params.get('redirect') || 'index.html';
-            }
-
-            showAlert(welcomeText, false);
-
-            setTimeout(() => {
-                window.location.href = redirectPage;
-            }, 600);
-
-        } catch (error) {
-            showAlert(error.message);
-        } finally {
-            loginBtn.disabled = false;
-            const btnSpan2 = loginBtn.querySelector('span') || loginBtn;
-            btnSpan2.textContent = 'Sign In';
+        if (!response.ok) {
+            throw new Error(data.message || 'Login failed. Please verify your credentials.');
         }
+
+        if (!data.user || !['ADMIN', 'RETAILER', 'DRIVER'].includes(data.user.role)) {
+            throw new Error('Access Denied: You do not have permission to access this portal.');
+        }
+
+        // Store authentication credentials
+        setAuth(data.token, data.user);
+
+        const role = data.user.role;
+        let welcomeText = `Welcome, Administrator ${data.user.name}! Redirecting to Dashboard...`;
+        let redirectPage = 'index.html';
+
+        if (role === 'RETAILER') {
+            welcomeText = `Welcome, ${data.user.name}! Redirecting to Retailer Portal...`;
+            const params = new URLSearchParams(window.location.search);
+            const redirectParam = params.get('redirect');
+            const allowedRetailerPages = ['retailer-portal.html', 'products.html'];
+            if (redirectParam && allowedRetailerPages.includes(redirectParam.split('?')[0])) {
+                redirectPage = redirectParam;
+            } else {
+                redirectPage = 'retailer-portal.html';
+            }
+        } else if (role === 'DRIVER') {
+            welcomeText = `Welcome, Driver ${data.user.name}! Redirecting to Driver Portal...`;
+            redirectPage = 'driver-portal.html';
+        } else {
+            const params = new URLSearchParams(window.location.search);
+            redirectPage = params.get('redirect') || 'index.html';
+        }
+
+        showAlert(welcomeText, false);
+
+        setTimeout(() => {
+            window.location.href = redirectPage;
+        }, 600);
+
+    } catch (error) {
+        showAlert(error.message);
+    } finally {
+        loginBtn.disabled = false;
+        const btnSpan2 = loginBtn.querySelector('span') || loginBtn;
+        btnSpan2.textContent = 'Sign In';
+    }
 };
 
 if (loginForm) {

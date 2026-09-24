@@ -1,8 +1,7 @@
-// Set this to your Render backend URL after deployment
-// e.g. 'https://logease-backend.onrender.com'
+// Render backend URL
 const API_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
-    : 'https://logease-backend.onrender.com';
+    : 'https://godown-backend-b3e9.onrender.com';
 
 
 const todayDate = document.querySelector('#today-date');
