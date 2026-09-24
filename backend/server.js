@@ -33,8 +33,8 @@ app.use(cors({
     origin: [
         'http://localhost:3000',
         'http://localhost:64713',
-        'https://logease.vercel.app',               // your Vercel URL
-        'https://logease-git-main-USERNAME.vercel.app' // Vercel preview URL
+        'https://godown-kappa.vercel.app/',         
+        'https://godown-kappa.vercel.app/login.html?redirect=index.html' 
     ],
     credentials: true
 }));
@@ -156,9 +156,8 @@ app.use((error, req, res, next) => {
 // =========================
 
 // Start listening immediately - don't block on DB
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`LogEase backend is running on port ${port}`);
-    console.log(`Health check: http://localhost:${port}/api/health`);
 });
 
 // Connect to MongoDB with retry logic (non-blocking)
