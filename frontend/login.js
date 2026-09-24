@@ -6,7 +6,6 @@ const LOGIN_API = window.location.hostname === 'localhost'
     : 'https://godown-backend-b3e9.onrender.com';
 
 
-
 const loginForm = document.querySelector('#login-form');
 const emailInput = document.querySelector('#admin-email');
 const passwordInput = document.querySelector('#admin-password');

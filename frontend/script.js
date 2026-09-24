@@ -1,7 +1,9 @@
 // Render backend URL
 const API_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
-    : 'https://godown-backend-b3e9.onrender.com';
+    : 'https://godown-backend-b3e9.onrender.com'; // change this
+
+
 
 
 const todayDate = document.querySelector('#today-date');

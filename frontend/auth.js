@@ -2,10 +2,8 @@
 
 const AUTH_CONFIG = {
     apiBase: window.location.hostname === 'localhost'
-        ? 'http://localhost:5000/api'
-        : 'https://godown-backend-b3e9.onrender.com/api',
-    tokenKey: 'logease_token',
-    userKey: 'logease_user'
+    ? 'http://localhost:5000/api'
+    : 'https://godown-backend-b3e9.onrender.com/api'
 };
 
 
