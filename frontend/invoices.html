@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase invoice management" />
+    <title>LogEase | Invoices</title>
+    <link rel="stylesheet" href="style.css?v=11" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="vehicles.html">Vehicles</a>
+                <a class="nav-link" href="retailers.html">Retailers</a>
+                <a class="nav-link" href="deliveries.html">Deliveries</a>
+                <a class="nav-link active" href="invoices.html">Invoices</a>
+                <a class="nav-link" href="reports.html">Reports</a>
+                <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="product-page invoice-page">
+            <section class="page-heading" aria-labelledby="invoices-title">
+                <p class="eyebrow">Billing records</p>
+                <h1 id="invoices-title">Invoices</h1>
+                <p class="welcome-copy">View and print invoices generated from completed deliveries.</p>
+            </section>
+
+            <section class="product-list invoice-list" aria-labelledby="invoice-list-title">
+                <div class="section-heading list-heading">
+                    <div>
+                        <p class="eyebrow">Invoice register</p>
+                        <h2 id="invoice-list-title">All invoices</h2>
+                    </div>
+                    <label class="search-box" for="invoice-search">
+                        <span class="sr-only">Search invoices</span>
+                        <input id="invoice-search" type="search" placeholder="Search invoices" />
+                    </label>
+                </div>
+                <div class="export-toolbar" aria-label="Invoice export filters">
+                    <label for="export-date">Date<input id="export-date" type="date" /></label>
+                    <label for="export-driver">Driver<select id="export-driver"><option value="">All drivers</option></select></label>
+                    <label for="export-retailer">Retailer<select id="export-retailer"><option value="">All retailers</option></select></label>
+                    <label for="export-product">Product<select id="export-product"><option value="">All products</option></select></label>
+                    <button class="primary-button export-button" id="export-excel" type="button">Export Excel</button>
+                </div>
+                <p class="list-message" id="invoice-list-message" role="status">Loading invoices...</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Invoice</th>
+                                <th scope="col">Generated</th>
+                                <th scope="col">Retailer</th>
+                                <th scope="col">Driver</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Payment</th>
+                                <th scope="col"><span class="sr-only">Actions</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoice-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="invoice-detail hidden" id="invoice-detail" aria-labelledby="invoice-detail-title"></section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="invoices.js?v=3"></script>
+</body>
+
+</html>

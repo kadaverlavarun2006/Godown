@@ -1,0 +1,15 @@
+{
+    "name": "logease",
+    "version": "1.0.0",
+    "private": true,
+    "description": "LogEase project scaffold",
+    "main": "backend/server.js",
+    "scripts": {
+        "start": "node backend/server.js"
+    },
+    "dependencies": {
+        "express": "^5.1.0",
+        "mongodb": "^6.21.0",
+        "xlsx": "^0.18.5"
+    }
+}

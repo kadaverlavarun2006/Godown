@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase delivery management" />
+    <title>LogEase | Deliveries</title>
+    <link rel="stylesheet" href="style.css?v=8" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="vehicles.html">Vehicles</a>
+                <a class="nav-link" href="retailers.html">Retailers</a>
+                <a class="nav-link active" href="deliveries.html">Deliveries</a>
+                <a class="nav-link" href="invoices.html">Invoices</a>
+                <a class="nav-link" href="reports.html">Reports</a>
+                <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="product-page delivery-page">
+            <section class="page-heading" aria-labelledby="deliveries-title">
+                <p class="eyebrow">Route operations</p>
+                <h1 id="deliveries-title">Deliveries</h1>
+                <p class="welcome-copy">Assign, load, dispatch, and complete deliveries with stock protection.</p>
+            </section>
+
+            <section class="product-layout delivery-layout" aria-label="Delivery management">
+                <form class="product-form" id="delivery-form">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">New route</p>
+                            <h2>Create delivery</h2>
+                        </div>
+                    </div>
+
+                    <label for="delivery-driver">Driver</label>
+                    <select id="delivery-driver" name="driver" required>
+                        <option value="">Select driver</option>
+                    </select>
+
+                    <label for="delivery-vehicle">Vehicle</label>
+                    <select id="delivery-vehicle" name="vehicle" required>
+                        <option value="">Select vehicle</option>
+                    </select>
+
+                    <label for="delivery-retailer">Retailer</label>
+                    <select id="delivery-retailer" name="retailer" required>
+                        <option value="">Select retailer</option>
+                    </select>
+
+                    <label for="delivery-product">Product</label>
+                    <select id="delivery-product">
+                        <option value="">Select product</option>
+                    </select>
+
+                    <label for="delivery-quantity">Requested quantity</label>
+                    <input id="delivery-quantity" type="number" min="0.0001" step="0.0001" />
+                    <button class="secondary-button" id="add-delivery-product" type="button">Add product to delivery</button>
+                    <div class="delivery-product-lines" id="delivery-product-lines"></div>
+
+                    <button class="primary-button" type="submit">Create delivery</button>
+                    <p class="form-message" id="delivery-form-message" role="status"></p>
+                </form>
+
+                <section class="product-list" aria-labelledby="delivery-list-title">
+                    <div class="section-heading list-heading">
+                        <div>
+                            <p class="eyebrow">Route board</p>
+                            <h2 id="delivery-list-title">All deliveries</h2>
+                        </div>
+                        <button class="text-button" id="refresh-deliveries" type="button">Refresh</button>
+                    </div>
+                    <p class="list-message" id="delivery-list-message" role="status">Loading deliveries...</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Retailer</th>
+                                    <th scope="col">Driver</th>
+                                    <th scope="col">Vehicle</th>
+                                    <th scope="col">Products</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"><span class="sr-only">Actions</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="delivery-table-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+
+            <section class="completion-panel hidden" id="completion-panel" aria-labelledby="completion-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Close route</p>
+                        <h2 id="completion-title">Complete delivery</h2>
+                    </div>
+                    <button class="text-button" id="cancel-completion" type="button">Cancel</button>
+                </div>
+                <label for="completion-status">Final status</label>
+                <select id="completion-status">
+                    <option value="DELIVERED">Delivered</option>
+                    <option value="PARTIALLY_DELIVERED">Partially delivered</option>
+                    <option value="RETURNED">Returned</option>
+                </select>
+                <div class="completion-lines" id="completion-lines"></div>
+                <button class="primary-button" id="submit-completion" type="button">Save completion</button>
+                <p class="form-message" id="completion-message" role="status"></p>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="deliveries.js?v=1"></script>
+</body>
+
+</html>

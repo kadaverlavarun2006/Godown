@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase vehicle management" />
+    <title>LogEase | Vehicles</title>
+    <link rel="stylesheet" href="style.css?v=6" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link active" href="vehicles.html">Vehicles</a>
+                <a class="nav-link" href="retailers.html">Retailers</a>
+                <a class="nav-link" href="deliveries.html">Deliveries</a>
+                <a class="nav-link" href="invoices.html">Invoices</a>
+                <a class="nav-link" href="reports.html">Reports</a>
+                <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="product-page vehicle-page">
+            <section class="page-heading" aria-labelledby="vehicles-title">
+                <p class="eyebrow">Operations</p>
+                <h1 id="vehicles-title">Vehicles</h1>
+                <p class="welcome-copy">Manage your godown vehicles and driver assignments.</p>
+            </section>
+
+            <section class="product-layout" aria-label="Vehicle management">
+                <form class="product-form" id="vehicle-form">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Vehicle details</p>
+                            <h2 id="vehicle-form-title">Add vehicle</h2>
+                        </div>
+                        <button class="text-button hidden" id="cancel-vehicle-edit" type="button">Cancel</button>
+                    </div>
+
+                    <label for="vehicle-number">Vehicle number</label>
+                    <input id="vehicle-number" name="vehicleNumber" type="text" required />
+
+                    <label for="vehicle-type">Vehicle type</label>
+                    <input id="vehicle-type" name="vehicleType" type="text" placeholder="e.g. Truck" required />
+
+                    <label for="capacity">Capacity</label>
+                    <input id="capacity" name="capacity" type="number" min="0" step="0.01" required />
+
+                    <label for="assigned-driver">Assigned driver <span class="field-hint">(optional)</span></label>
+                    <select id="assigned-driver" name="assignedDriver">
+                        <option value="">No driver assigned</option>
+                    </select>
+
+                    <button class="primary-button" type="submit" id="submit-vehicle">Add vehicle</button>
+                    <p class="form-message" id="vehicle-form-message" role="status"></p>
+                </form>
+
+                <section class="product-list" aria-labelledby="vehicle-list-title">
+                    <div class="section-heading list-heading">
+                        <div>
+                            <p class="eyebrow">Fleet directory</p>
+                            <h2 id="vehicle-list-title">All vehicles</h2>
+                        </div>
+                        <label class="search-box" for="vehicle-search">
+                            <span class="sr-only">Search vehicles</span>
+                            <input id="vehicle-search" type="search" placeholder="Search vehicles" />
+                        </label>
+                    </div>
+
+                    <p class="list-message" id="vehicle-list-message" role="status">Loading vehicles...</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Vehicle number</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Capacity</th>
+                                    <th scope="col">Assigned driver</th>
+                                    <th scope="col"><span class="sr-only">Actions</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehicle-table-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="vehicles.js?v=1"></script>
+</body>
+
+</html>

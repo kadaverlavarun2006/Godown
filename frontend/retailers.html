@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase retailer management" />
+    <title>LogEase | Retailers</title>
+    <link rel="stylesheet" href="style.css?v=7" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="vehicles.html">Vehicles</a>
+                <a class="nav-link active" href="retailers.html">Retailers</a>
+                <a class="nav-link" href="deliveries.html">Deliveries</a>
+                <a class="nav-link" href="invoices.html">Invoices</a>
+                <a class="nav-link" href="reports.html">Reports</a>
+                <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="product-page retailer-page">
+            <section class="page-heading" aria-labelledby="retailers-title">
+                <p class="eyebrow">Sales network</p>
+                <h1 id="retailers-title">Retailers</h1>
+                <p class="welcome-copy">Manage the retailers connected to your godown.</p>
+            </section>
+
+            <section class="product-layout" aria-label="Retailer management">
+                <form class="product-form" id="retailer-form">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Retailer details</p>
+                            <h2 id="retailer-form-title">Add retailer</h2>
+                        </div>
+                        <button class="text-button hidden" id="cancel-retailer-edit" type="button">Cancel</button>
+                    </div>
+
+                    <label for="shop-name">Shop name</label>
+                    <input id="shop-name" name="shopName" type="text" required />
+
+                    <label for="owner-name">Owner name</label>
+                    <input id="owner-name" name="ownerName" type="text" required />
+
+                    <label for="retailer-phone">Phone</label>
+                    <input id="retailer-phone" name="phone" type="tel" required />
+
+                    <label for="retailer-address">Address</label>
+                    <textarea id="retailer-address" name="address" rows="3" required></textarea>
+
+                    <label for="retailer-city">City</label>
+                    <input id="retailer-city" name="city" type="text" required />
+
+                    <label for="gst-number">GST number</label>
+                    <input id="gst-number" name="gstNumber" type="text" required />
+
+                    <button class="primary-button" type="submit" id="submit-retailer">Add retailer</button>
+                    <p class="form-message" id="retailer-form-message" role="status"></p>
+                </form>
+
+                <section class="product-list" aria-labelledby="retailer-list-title">
+                    <div class="section-heading list-heading">
+                        <div>
+                            <p class="eyebrow">Retailer directory</p>
+                            <h2 id="retailer-list-title">All retailers</h2>
+                        </div>
+                        <label class="search-box" for="retailer-search">
+                            <span class="sr-only">Search retailers</span>
+                            <input id="retailer-search" type="search" placeholder="Search retailers" />
+                        </label>
+                    </div>
+
+                    <p class="list-message" id="retailer-list-message" role="status">Loading retailers...</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Shop name</th>
+                                    <th scope="col">Owner</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">GST number</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"><span class="sr-only">Actions</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="retailer-table-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="retailers.js?v=1"></script>
+</body>
+
+</html>

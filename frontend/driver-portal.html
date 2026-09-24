@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase Driver Portal - View assigned deliveries, update status, record returns and view delivery history." />
+    <title>LogEase | Driver Portal</title>
+    <link rel="stylesheet" href="style.css?v=14" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="driver-portal.html" aria-label="LogEase Driver Portal">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <!-- Dynamically populated by auth.js for DRIVER -->
+            </nav>
+        </header>
+
+        <main class="dashboard">
+            <section class="welcome" aria-labelledby="driver-portal-title">
+                <p class="eyebrow">Driver Portal</p>
+                <h1 id="driver-portal-title"><span id="driver-greeting">My Assigned Deliveries</span></h1>
+                <p class="welcome-copy" id="driver-meta">Manage your delivery routes, update transit status, record handovers, and submit return/damage logs.</p>
+            </section>
+
+            <!-- Driver KPI Summary Cards -->
+            <section class="summary-grid" aria-label="Driver route summary">
+                <article class="summary-card distribution-card">
+                    <div class="card-icon" aria-hidden="true">📋</div>
+                    <div>
+                        <p class="card-label">Active Shipments</p>
+                        <p class="card-value" id="kpi-active-deliveries">-- <span>trips</span></p>
+                    </div>
+                    <p class="card-note">Assigned &amp; Loaded</p>
+                </article>
+
+                <article class="summary-card delivery-card">
+                    <div class="card-icon" aria-hidden="true">🚚</div>
+                    <div>
+                        <p class="card-label">Out For Delivery</p>
+                        <p class="card-value" id="kpi-in-transit">-- <span>en route</span></p>
+                    </div>
+                    <p class="card-note warning">Currently on the road</p>
+                </article>
+
+                <article class="summary-card sales-card">
+                    <div class="card-icon" aria-hidden="true">✓</div>
+                    <div>
+                        <p class="card-label">Completed</p>
+                        <p class="card-value" id="kpi-completed">-- <span>delivered</span></p>
+                    </div>
+                    <p class="card-note">Total successful handovers</p>
+                </article>
+            </section>
+
+            <!-- Navigation Tabs -->
+            <div class="retailer-tabs" role="tablist">
+                <button class="tab-btn active" role="tab" data-tab="tab-active-deliveries" type="button">Active Deliveries</button>
+                <button class="tab-btn" role="tab" data-tab="tab-delivery-history" type="button">Delivery History</button>
+            </div>
+
+            <!-- Tab 1: Active Deliveries -->
+            <section id="tab-active-deliveries" class="tab-content active" role="tabpanel">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Assigned Shipments &amp; Drop-offs</h2>
+                        <p id="active-deliveries-count" class="list-message">Loading active trips...</p>
+                    </div>
+                    <div id="active-deliveries-container" class="driver-deliveries-grid">
+                        <div class="empty-state">Loading your assigned deliveries...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 2: Delivery History -->
+            <section id="tab-delivery-history" class="tab-content" role="tabpanel">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Past Delivery History</h2>
+                        <p id="history-deliveries-count" class="list-message">Loading history...</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="driver-history-table">
+                            <thead>
+                                <tr>
+                                    <th>Delivered Date</th>
+                                    <th>Retailer &amp; Location</th>
+                                    <th>Products Delivered</th>
+                                    <th>Delivered / Returned / Damaged</th>
+                                    <th>Return / Damage Reason</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="driver-history-tbody">
+                                <tr><td colspan="6" class="empty-state">Loading past delivery logs...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Status Update / Completion Modal -->
+    <div id="completion-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modal-title">Record Delivery Handover</h2>
+                <button type="button" class="btn-close-modal" id="btn-close-modal" aria-label="Close modal">&times;</button>
+            </div>
+            <form id="completion-form" class="modal-body">
+                <input type="hidden" id="modal-delivery-id" />
+                
+                <div class="field-group">
+                    <label for="modal-status-select">Delivery Outcome</label>
+                    <select id="modal-status-select" required>
+                        <option value="DELIVERED">Full Delivery (Delivered in full)</option>
+                        <option value="PARTIALLY_DELIVERED">Partially Delivered (Some returned or damaged)</option>
+                        <option value="RETURNED">Fully Returned (Order rejected / shop closed)</option>
+                    </select>
+                </div>
+
+                <div class="modal-products-section">
+                    <h3>Verify Product Quantities</h3>
+                    <div class="modal-table-wrap">
+                        <table class="modal-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Loaded</th>
+                                    <th>Delivered</th>
+                                    <th>Returned</th>
+                                    <th>Damaged</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-products-tbody">
+                                <!-- Dynamically filled with product rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="field-group" style="margin-top: 16px;">
+                    <label for="modal-return-reason">Return / Damage Reason (Required if items returned or damaged)</label>
+                    <textarea id="modal-return-reason" rows="2" placeholder="e.g. Broken seal, expired batch, shop requested fewer items, store closed..."></textarea>
+                </div>
+
+                <div id="modal-error-message" class="alert-message alert-error hidden" role="alert" style="margin-top: 12px;"></div>
+
+                <div class="modal-actions" style="margin-top: 20px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="secondary-btn" id="btn-cancel-modal">Cancel</button>
+                    <button type="submit" class="primary-btn" id="btn-submit-completion">Confirm &amp; Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="driver-portal.js"></script>
+</body>
+
+</html>

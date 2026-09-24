@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase Retailer Portal - Orders, Deliveries, Bills and Payments" />
+    <title>LogEase | Retailer Portal</title>
+    <link rel="stylesheet" href="style.css?v=12" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="retailer-portal.html" aria-label="LogEase Retailer Portal">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <!-- Dynamically populated by auth.js for RETAILER -->
+            </nav>
+        </header>
+
+        <main class="dashboard">
+            <section class="welcome" aria-labelledby="portal-title">
+                <p class="eyebrow">Retailer Portal</p>
+                <h1 id="portal-title"><span id="store-title">My Store Operations</span></h1>
+                <p class="welcome-copy" id="store-meta">Manage your stock orders, track deliveries, view bills, and process payments.</p>
+            </section>
+
+            <!-- Retailer KPI Summary Cards -->
+            <section class="summary-grid" aria-label="Retailer store summary">
+                <article class="summary-card distribution-card">
+                    <div class="card-icon" aria-hidden="true">📦</div>
+                    <div>
+                        <p class="card-label">My Orders</p>
+                        <p class="card-value" id="retailer-total-orders">-- <span>placed</span></p>
+                    </div>
+                    <p class="card-note">Total store orders</p>
+                </article>
+
+                <article class="summary-card delivery-card">
+                    <div class="card-icon" aria-hidden="true">◷</div>
+                    <div>
+                        <p class="card-label">Active Deliveries</p>
+                        <p class="card-value" id="retailer-active-orders">-- <span>in progress</span></p>
+                    </div>
+                    <p class="card-note warning">Shipments on the way</p>
+                </article>
+
+                <article class="summary-card bills-card">
+                    <div class="card-icon" aria-hidden="true">▤</div>
+                    <div>
+                        <p class="card-label">Pending Bills</p>
+                        <p class="card-value" id="retailer-pending-bills">--</p>
+                    </div>
+                    <p class="card-note warning">Outstanding amount</p>
+                </article>
+
+                <article class="summary-card sales-card">
+                    <div class="card-icon" aria-hidden="true">₹</div>
+                    <div>
+                        <p class="card-label">Paid Amount</p>
+                        <p class="card-value" id="retailer-total-paid">--</p>
+                    </div>
+                    <p class="card-note">Cleared payments</p>
+                </article>
+            </section>
+
+            <!-- Navigation Tabs -->
+            <div class="retailer-tabs" role="tablist">
+                <button class="tab-btn active" role="tab" data-tab="tab-create-order" type="button">Create Order</button>
+                <button class="tab-btn" role="tab" data-tab="tab-orders" type="button">My Orders</button>
+                <button class="tab-btn" role="tab" data-tab="tab-bills" type="button">My Bills</button>
+                <button class="tab-btn" role="tab" data-tab="tab-payments" type="button">Payment History</button>
+            </div>
+
+            <!-- Tab 1: Create Order -->
+            <section id="tab-create-order" class="tab-content active" role="tabpanel">
+                <div class="order-builder">
+                    <article class="panel">
+                        <h2>Place New Product Order</h2>
+                        <form id="order-form" class="entity-form">
+                            <div class="field-group">
+                                <label for="order-product">Select Product</label>
+                                <select id="order-product" required>
+                                    <option value="">Loading products...</option>
+                                </select>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="order-quantity">Quantity</label>
+                                <input type="number" id="order-quantity" min="1" step="1" placeholder="e.g. 20" required />
+                            </div>
+
+                            <div class="field-group">
+                                <label>Unit Price</label>
+                                <input type="text" id="order-unit-price" readonly placeholder="₹0.00" />
+                            </div>
+
+                            <button type="button" id="btn-add-line" class="secondary-btn">Add to Order List</button>
+                        </form>
+                    </article>
+
+                    <article class="order-summary-card">
+                        <h2>Order Summary</h2>
+                        <div id="order-items-list" class="order-items-list">
+                            <p class="line-placeholder">No items added to this order yet.</p>
+                        </div>
+
+                        <div class="order-total-bar">
+                            <span>Estimated Total:</span>
+                            <span id="order-total-amount">₹0.00</span>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <button type="button" id="btn-submit-order" class="primary-btn" style="width: 100%;" disabled>
+                                Confirm & Submit Order
+                            </button>
+                            <p id="order-form-message" class="form-message" role="status" style="margin-top: 10px;"></p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Tab 2: My Orders -->
+            <section id="tab-orders" class="tab-content" role="tabpanel">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>My Orders & Deliveries</h2>
+                        <p id="orders-count" class="list-message">Loading orders...</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="retailer-orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order Date</th>
+                                    <th>Products</th>
+                                    <th>Total Quantity</th>
+                                    <th>Delivered Quantity</th>
+                                    <th>Delivery Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="retailer-orders-tbody">
+                                <tr><td colspan="5" class="empty-state">Loading your orders...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 3: My Bills -->
+            <section id="tab-bills" class="tab-content" role="tabpanel">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>My Bills & Invoices</h2>
+                        <p id="bills-count" class="list-message">Loading bills...</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="retailer-bills-table">
+                            <thead>
+                                <tr>
+                                    <th>Invoice #</th>
+                                    <th>Date</th>
+                                    <th>Products</th>
+                                    <th>Amount</th>
+                                    <th>Payment Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="retailer-bills-tbody">
+                                <tr><td colspan="6" class="empty-state">Loading your invoices...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 4: Payment History -->
+            <section id="tab-payments" class="tab-content" role="tabpanel">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Payment History</h2>
+                        <p id="payments-count" class="list-message">Loading payments...</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="retailer-payments-table">
+                            <thead>
+                                <tr>
+                                    <th>Invoice #</th>
+                                    <th>Bill Date</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>Invoice Copy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="retailer-payments-tbody">
+                                <tr><td colspan="5" class="empty-state">Loading payment history...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="retailer-portal.js"></script>
+</body>
+
+</html>

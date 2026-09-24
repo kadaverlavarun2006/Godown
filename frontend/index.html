@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase Godown Management System dashboard" />
+    <title>LogEase | Godown Management System</title>
+    <link rel="stylesheet" href="style.css?v=12" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="vehicles.html">Vehicles</a>
+                <a class="nav-link" href="retailers.html">Retailers</a>
+                <a class="nav-link" href="deliveries.html">Deliveries</a>
+                <a class="nav-link" href="invoices.html">Invoices</a>
+                <a class="nav-link" href="reports.html">Reports</a>
+                <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                <div class="header-date">
+                    <span class="date-label">Today</span>
+                    <time id="today-date"></time>
+                </div>
+            </nav>
+        </header>
+
+        <main class="dashboard">
+            <section class="welcome" aria-labelledby="page-title">
+                <p class="eyebrow">Overview</p>
+                <h1 id="page-title">Godown Management System</h1>
+                <p class="welcome-copy">A clear view of your warehouse operations.</p>
+                <p class="backend-status" aria-live="polite">
+                    <span class="status-dot" aria-hidden="true"></span> Backend Status: <strong id="backend-status">Checking...</strong>
+                </p>
+            </section>
+
+            <section class="summary-grid" aria-label="Daily warehouse summary">
+                <article class="summary-card stock-card">
+                    <div class="card-icon" aria-hidden="true">▦</div>
+                    <div>
+                        <p class="card-label">Current Stock</p>
+                        <p class="card-value" id="current-stock">-- <span>units</span></p>
+                    </div>
+                    <p class="card-note">Available godown stock</p>
+                </article>
+
+                <article class="summary-card distribution-card">
+                    <div class="card-icon" aria-hidden="true">↗</div>
+                    <div>
+                        <p class="card-label">Today's Distribution</p>
+                        <p class="card-value" id="todays-distribution">-- <span>units</span></p>
+                    </div>
+                    <p class="card-note">Delivered today</p>
+                </article>
+
+                <article class="summary-card bills-card">
+                    <div class="card-icon" aria-hidden="true">▤</div>
+                    <div>
+                        <p class="card-label">Today's Bills</p>
+                        <p class="card-value" id="todays-bills">-- <span>invoices</span></p>
+                    </div>
+                    <p class="card-note">Generated today</p>
+                </article>
+
+                <article class="summary-card delivery-card">
+                    <div class="card-icon" aria-hidden="true">◷</div>
+                    <div>
+                        <p class="card-label">Pending Deliveries</p>
+                        <p class="card-value" id="pending-deliveries">-- <span>shipments</span></p>
+                    </div>
+                    <p class="card-note warning">Active routes</p>
+                </article>
+
+                <article class="summary-card sales-card">
+                    <div class="card-icon" aria-hidden="true">₹</div>
+                    <div>
+                        <p class="card-label">Today's Sales</p>
+                        <p class="card-value" id="todays-sales">--</p>
+                    </div>
+                    <p class="card-note">Invoice value generated today</p>
+                </article>
+
+                <article class="summary-card returned-card">
+                    <div class="card-icon" aria-hidden="true">↩</div>
+                    <div>
+                        <p class="card-label">Returned Stock</p>
+                        <p class="card-value" id="returned-stock">-- <span>units</span></p>
+                    </div>
+                    <p class="card-note">Returned today</p>
+                </article>
+
+                <article class="summary-card damaged-card">
+                    <div class="card-icon" aria-hidden="true">!</div>
+                    <div>
+                        <p class="card-label">Damaged Stock</p>
+                        <p class="card-value" id="damaged-stock">-- <span>units</span></p>
+                    </div>
+                    <p class="card-note warning">Damaged today</p>
+                </article>
+            </section>
+
+            <section class="dashboard-charts" aria-label="Distribution charts">
+                <article class="chart-panel chart-wide">
+                    <div class="chart-heading">
+                        <div>
+                            <p class="eyebrow">Last 7 days</p>
+                            <h2>Distribution trend</h2>
+                        </div>
+                    </div>
+                    <canvas id="last-seven-chart" aria-label="Last 7 days distribution chart"></canvas>
+                </article>
+                <article class="chart-panel">
+                    <div class="chart-heading">
+                        <div>
+                            <p class="eyebrow">Today</p>
+                            <h2>Product-wise distribution</h2>
+                        </div>
+                    </div>
+                    <canvas id="product-chart" aria-label="Product-wise distribution chart"></canvas>
+                </article>
+                <article class="chart-panel">
+                    <div class="chart-heading">
+                        <div>
+                            <p class="eyebrow">Today</p>
+                            <h2>Driver-wise distribution</h2>
+                        </div>
+                    </div>
+                    <canvas id="driver-chart" aria-label="Driver-wise distribution chart"></canvas>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="script.js?v=3"></script>
+</body>
+
+</html>

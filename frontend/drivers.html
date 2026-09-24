@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase driver management" />
+    <title>LogEase | Drivers</title>
+    <link rel="stylesheet" href="style.css?v=5" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link active" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="vehicles.html">Vehicles</a>
+                <a class="nav-link" href="retailers.html">Retailers</a>
+                <a class="nav-link" href="deliveries.html">Deliveries</a>
+                <a class="nav-link" href="invoices.html">Invoices</a>
+                <a class="nav-link" href="reports.html">Reports</a>
+                <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="product-page driver-page">
+            <section class="page-heading" aria-labelledby="drivers-title">
+                <p class="eyebrow">Operations</p>
+                <h1 id="drivers-title">Drivers</h1>
+                <p class="welcome-copy">Manage the drivers available for godown operations.</p>
+            </section>
+
+            <section class="product-layout" aria-label="Driver management">
+                <form class="product-form" id="driver-form">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Driver details</p>
+                            <h2 id="driver-form-title">Add driver</h2>
+                        </div>
+                        <button class="text-button hidden" id="cancel-driver-edit" type="button">Cancel</button>
+                    </div>
+
+                    <label for="driver-name">Name</label>
+                    <input id="driver-name" name="name" type="text" required />
+
+                    <label for="driver-phone">Phone</label>
+                    <input id="driver-phone" name="phone" type="tel" required />
+
+                    <label for="license-number">License number</label>
+                    <input id="license-number" name="licenseNumber" type="text" required />
+
+                    <button class="primary-button" type="submit" id="submit-driver">Add driver</button>
+                    <p class="form-message" id="driver-form-message" role="status"></p>
+                </form>
+
+                <section class="product-list" aria-labelledby="driver-list-title">
+                    <div class="section-heading list-heading">
+                        <div>
+                            <p class="eyebrow">Driver directory</p>
+                            <h2 id="driver-list-title">All drivers</h2>
+                        </div>
+                        <label class="search-box" for="driver-search">
+                            <span class="sr-only">Search drivers</span>
+                            <input id="driver-search" type="search" placeholder="Search drivers" />
+                        </label>
+                    </div>
+
+                    <p class="list-message" id="driver-list-message" role="status">Loading drivers...</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">License number</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"><span class="sr-only">Actions</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="driver-table-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="drivers.js?v=1"></script>
+</body>
+
+</html>

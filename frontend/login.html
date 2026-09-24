@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase Godown Management System Administrator Login" />
+    <title>LogEase | Sign In</title>
+    <link rel="stylesheet" href="style.css?v=12" />
+</head>
+
+<body>
+    <div class="app-shell login-shell">
+        <main class="login-wrapper">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="brand-mark large-brand-mark" aria-hidden="true">L</div>
+                    <h1 class="login-title">LogEase</h1>
+                    <p class="login-subtitle">Godown Management System · Account Sign In</p>
+                </div>
+
+                <div id="login-alert" class="alert-message hidden" role="alert" aria-live="polite"></div>
+
+                <form id="login-form" class="login-form" novalidate>
+                    <div class="field-group">
+                        <label for="admin-email">Email Address</label>
+                        <input type="email" id="admin-email" name="email" required autocomplete="email" placeholder="user@logease.com" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="admin-password">Password</label>
+                        <input type="password" id="admin-password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+                    </div>
+
+                    <button type="submit" id="login-btn" class="primary-btn submit-login-btn">
+                        <span>Sign In</span>
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p class="admin-notice">
+                        <strong class="security-badge">ROLE-BASED ACCESS</strong><br>
+                        Authorized portal for Administrators and Registered Retailers.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="login.js"></script>
+</body>
+
+</html>

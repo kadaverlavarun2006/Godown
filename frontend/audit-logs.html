@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase audit logs" />
+    <title>LogEase | Audit Logs</title>
+    <link rel="stylesheet" href="style.css?v=14" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="vehicles.html">Vehicles</a>
+                <a class="nav-link" href="retailers.html">Retailers</a>
+                <a class="nav-link" href="deliveries.html">Deliveries</a>
+                <a class="nav-link" href="invoices.html">Invoices</a>
+                <a class="nav-link" href="reports.html">Reports</a>
+                <a class="nav-link active" href="audit-logs.html">Audit Logs</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="product-page audit-page">
+            <section class="page-heading" aria-labelledby="audit-title">
+                <p class="eyebrow">Admin controls</p>
+                <h1 id="audit-title">Audit Logs</h1>
+                <p class="welcome-copy">Append-only history for important LogEase actions.</p>
+            </section>
+
+            <section class="report-controls audit-controls" aria-label="Audit log filters">
+                <label>From<input id="audit-from" type="date" /></label>
+                <label>To<input id="audit-to" type="date" /></label>
+                <label>Action<select id="audit-action"><option value="">All actions</option></select></label>
+                <label>Entity<select id="audit-entity"><option value="">All entities</option></select></label>
+                <label>User<input id="audit-user" type="search" placeholder="Search user" /></label>
+                <button class="primary-button report-action" id="refresh-audit" type="button">Refresh logs</button>
+            </section>
+
+            <section class="product-list report-result" aria-labelledby="audit-list-title">
+                <div class="section-heading list-heading">
+                    <div>
+                        <p class="eyebrow">Immutable record</p>
+                        <h2 id="audit-list-title">Action history</h2>
+                    </div>
+                    <p class="list-message" id="audit-message" role="status">Loading audit logs...</p>
+                </div>
+                <div class="table-wrap">
+                    <table id="audit-table"></table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="audit-logs.js?v=1"></script>
+</body>
+
+</html>

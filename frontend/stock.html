@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase stock management" />
+    <title>LogEase | Stock</title>
+    <link rel="stylesheet" href="style.css?v=4" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link active" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="vehicles.html">Vehicles</a>
+                <a class="nav-link" href="retailers.html">Retailers</a>
+                <a class="nav-link" href="deliveries.html">Deliveries</a>
+                <a class="nav-link" href="invoices.html">Invoices</a>
+                <a class="nav-link" href="reports.html">Reports</a>
+                <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="product-page stock-page">
+            <section class="page-heading" aria-labelledby="stock-title">
+                <p class="eyebrow">Godown operations</p>
+                <h1 id="stock-title">Stock Management</h1>
+                <p class="welcome-copy">Record stock entering the godown and track every transaction.</p>
+            </section>
+
+            <section class="product-layout stock-layout" aria-label="Stock management">
+                <form class="product-form stock-form" id="stock-form">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">New transaction</p>
+                            <h2>Add stock in</h2>
+                        </div>
+                    </div>
+
+                    <label for="product">Product</label>
+                    <select id="product" name="product" required>
+                        <option value="">Select product</option>
+                    </select>
+
+                    <label for="quantity">Quantity</label>
+                    <input id="quantity" name="quantity" type="number" min="0.0001" step="0.0001" required />
+
+                    <label for="supplier">Supplier</label>
+                    <input id="supplier" name="supplier" type="text" required />
+
+                    <label for="invoice-number">Invoice number</label>
+                    <input id="invoice-number" name="invoiceNumber" type="text" required />
+
+                    <label for="batch-number">Batch number</label>
+                    <input id="batch-number" name="batchNumber" type="text" required />
+
+                    <label for="stock-date">Date</label>
+                    <input id="stock-date" name="date" type="date" required />
+
+                    <label for="created-by">Created by</label>
+                    <input id="created-by" name="createdBy" type="text" required />
+
+                    <button class="primary-button" type="submit">Record stock in</button>
+                    <p class="form-message" id="stock-form-message" role="status"></p>
+                </form>
+
+                <div class="stock-views">
+                    <section class="product-list stock-current" aria-labelledby="current-stock-title">
+                        <div class="section-heading list-heading">
+                            <div>
+                                <p class="eyebrow">Transaction total</p>
+                                <h2 id="current-stock-title">Current stock</h2>
+                            </div>
+                            <button class="text-button" id="refresh-stock" type="button">Refresh</button>
+                        </div>
+                        <p class="list-message" id="current-stock-message" role="status">Loading current stock...</p>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Pack size</th>
+                                        <th scope="col">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="current-stock-body"></tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="product-list" aria-labelledby="stock-history-title">
+                        <div class="section-heading list-heading">
+                            <div>
+                                <p class="eyebrow">Audit trail</p>
+                                <h2 id="stock-history-title">Stock history</h2>
+                            </div>
+                            <div class="stock-filters">
+                                <label class="search-box" for="stock-search">
+                                    <span class="sr-only">Search stock transactions</span>
+                                    <input id="stock-search" type="search" placeholder="Search history" />
+                                </label>
+                                <select id="stock-product-filter" aria-label="Filter by product">
+                                    <option value="">All products</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="list-message" id="history-message" role="status">Loading stock history...</p>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Supplier</th>
+                                        <th scope="col">Invoice</th>
+                                        <th scope="col">Batch</th>
+                                        <th scope="col">Created by</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stock-history-body"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="stock.js?v=3"></script>
+</body>
+
+</html>

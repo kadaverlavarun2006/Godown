@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LogEase reports" />
+    <title>LogEase | Reports</title>
+    <link rel="stylesheet" href="style.css?v=13" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="LogEase dashboard home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+                <span>LogEase</span>
+            </a>
+            <nav class="topbar-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="stock.html">Stock</a>
+                <a class="nav-link" href="products.html">Products</a>
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="vehicles.html">Vehicles</a>
+                <a class="nav-link" href="retailers.html">Retailers</a>
+                <a class="nav-link" href="deliveries.html">Deliveries</a>
+                <a class="nav-link" href="invoices.html">Invoices</a>
+                <a class="nav-link active" href="reports.html">Reports</a>
+                <a class="nav-link" href="audit-logs.html">Audit Logs</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="product-page reports-page">
+            <section class="page-heading" aria-labelledby="reports-title">
+                <p class="eyebrow">Operations intelligence</p>
+                <h1 id="reports-title">Reports</h1>
+                <p class="welcome-copy">Review MongoDB-backed delivery, stock, and payment activity.</p>
+            </section>
+
+            <section class="report-controls" aria-label="Report controls">
+                <label>Report<select id="report-type">
+                    <option value="daily">Daily Report</option>
+                    <option value="weekly">Weekly Report</option>
+                    <option value="monthly">Monthly Report</option>
+                    <option value="driver">Driver-wise Report</option>
+                    <option value="retailer">Retailer-wise Report</option>
+                    <option value="product">Product-wise Report</option>
+                    <option value="stock">Stock Report</option>
+                    <option value="payment">Payment Report</option>
+                </select></label>
+                <label>From<input id="report-from" type="date" /></label>
+                <label>To<input id="report-to" type="date" /></label>
+                <label>Driver<select id="report-driver"><option value="">All drivers</option></select></label>
+                <label>Retailer<select id="report-retailer"><option value="">All retailers</option></select></label>
+                <label>Product<select id="report-product"><option value="">All products</option></select></label>
+                <button class="primary-button report-action" id="view-report" type="button">View Report</button>
+                <button class="secondary-button report-action" id="download-report-excel" type="button">Download Excel</button>
+                <button class="secondary-button report-action" id="download-report-pdf" type="button">Download PDF</button>
+            </section>
+
+            <section class="product-list report-result" aria-labelledby="report-result-title">
+                <div class="section-heading list-heading">
+                    <div>
+                        <p class="eyebrow">Live result</p>
+                        <h2 id="report-result-title">Report</h2>
+                    </div>
+                    <p class="list-message" id="report-message" role="status">Choose a report and view it.</p>
+                </div>
+                <div class="table-wrap">
+                    <table id="report-table"></table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="reports.js?v=1"></script>
+</body>
+
+</html>
