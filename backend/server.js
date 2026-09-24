@@ -41,28 +41,26 @@ const allowedOrigins = [
     'https://godown-kappa.vercel.app'
 ];
 
-app.use(cors({
+const corsOptions = {
     origin: function (origin, callback) {
-
-        // Allow requests without an origin
-        // Example: Postman, server-to-server requests
+        // Allow requests without an origin (Postman, curl, server-to-server)
         if (!origin) {
             return callback(null, true);
         }
 
-        if (allowedOrigins.includes(origin)) {
+        const cleanOrigin = origin.replace(/\/$/, '');
+        if (
+            allowedOrigins.includes(cleanOrigin) ||
+            allowedOrigins.includes(origin) ||
+            /^https:\/\/godown[a-z0-9-]*\.vercel\.app$/.test(cleanOrigin)
+        ) {
             return callback(null, true);
         }
 
-        console.log('Blocked CORS origin:', origin);
-
-        return callback(
-            new Error('Not allowed by CORS')
-        );
+        console.warn('Blocked CORS origin:', origin);
+        return callback(null, false);
     },
-
     credentials: true,
-
     methods: [
         'GET',
         'POST',
@@ -71,16 +69,14 @@ app.use(cors({
         'DELETE',
         'OPTIONS'
     ],
-
     allowedHeaders: [
         'Content-Type',
         'Authorization'
     ]
-}));
+};
 
-
-// Handle CORS preflight requests
-app.options('*', cors());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 
 // ======================================================
