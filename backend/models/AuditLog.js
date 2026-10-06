@@ -8,18 +8,13 @@ const auditLogSchema = new mongoose.Schema({
     },
     action: {
         type: String,
-        enum: [
-            'STOCK_ADDED',
-            'STOCK_ADJUSTED',
-            'DELIVERY_CREATED',
-            'DELIVERY_DISPATCHED',
-            'DELIVERY_COMPLETED',
-            'INVOICE_GENERATED',
-            'PAYMENT_UPDATED',
-            'RETURN_RECORDED'
-        ],
         required: true,
-        immutable: true
+        trim: true,
+        immutable: true,
+        validate: {
+            validator: (value) => typeof value === 'string' && value.trim().length > 0,
+            message: 'Audit action is required'
+        }
     },
     entity: {
         type: String,

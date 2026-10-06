@@ -9,7 +9,7 @@
 
 const LOGIN_API =
     (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.hostname)
-        ? 'http://localhost:5000'
+        ? 'http://localhost:3000'
         : 'https://godown-backend-b3e9.onrender.com';
 
 

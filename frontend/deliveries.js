@@ -1,7 +1,7 @@
 const API_BASE = (typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.apiBase)
     ? AUTH_CONFIG.apiBase
     : ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.hostname)
-        ? 'http://localhost:5000/api'
+        ? 'http://localhost:3000/api'
         : 'https://godown-backend-b3e9.onrender.com/api');
 const deliveriesApi = `${API_BASE}/deliveries`;
 const driversApi = `${API_BASE}/drivers`;

@@ -30,7 +30,13 @@ const {
 
 const app = express();
 
-const port = process.env.PORT || 5000;
+const frontendDir = path.join(__dirname, '..', 'frontend');
+app.use(express.static(frontendDir));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(frontendDir, 'index.html'));
+});
+
+const port = process.env.PORT || 3000;
 
 
 // ======================================================

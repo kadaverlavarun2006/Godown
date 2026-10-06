@@ -1,7 +1,7 @@
 const API_BASE = (typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.apiBase)
     ? AUTH_CONFIG.apiBase
     : ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.hostname)
-        ? 'http://localhost:5000/api'
+        ? 'http://localhost:3000/api'
         : 'https://godown-backend-b3e9.onrender.com/api');
 const auditApi = `${API_BASE}/audit-logs`;
 const auditTable = document.querySelector('#audit-table');
@@ -12,7 +12,7 @@ const auditAction = document.querySelector('#audit-action');
 const auditEntity = document.querySelector('#audit-entity');
 const auditUser = document.querySelector('#audit-user');
 
-const actions = ['STOCK_ADDED', 'STOCK_ADJUSTED', 'DELIVERY_CREATED', 'DELIVERY_DISPATCHED', 'DELIVERY_COMPLETED', 'INVOICE_GENERATED', 'PAYMENT_UPDATED', 'RETURN_RECORDED'];
+const actions = ['STOCK_ADDED', 'STOCK_ADJUSTED', 'ORDER_CREATED', 'DELIVERY_CREATED', 'DELIVERY_DISPATCHED', 'DELIVERY_COMPLETED', 'INVOICE_GENERATED', 'PAYMENT_UPDATED', 'RETURN_RECORDED'];
 const entities = ['StockTransaction', 'Delivery', 'Invoice'];
 
 const escapeHtml = (value) => String(value)
