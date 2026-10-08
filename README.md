@@ -9,6 +9,6 @@ npm install
 npm start
 ```
 
-Open http://localhost:3000 in a browser.
+Open [Live Website](https://godown-kappa.vercel.app/login.html) in a browser.
 
 MongoDB and XLSX/SheetJS dependencies are declared for later implementation.
