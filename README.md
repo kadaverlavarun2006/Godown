@@ -1,14 +1,6 @@
 # LogEase
-
-Basic project scaffold for an HTML/CSS/JavaScript frontend and Node.js/Express backend.
-
-## Run
-
-```powershell
-npm install
-npm start
-```
-
 Open [Live Website](https://godown-kappa.vercel.app/login.html) in a browser.
 
-MongoDB and XLSX/SheetJS dependencies are declared for later implementation.
+## About LogEase
+
+**LogEase** is a Godown Inventory and Purchase Management System designed to manage goods, stock, customers, and purchases efficiently. Retailers can view available products, place orders based on stock availability, and receive bills after purchase. The system automatically updates inventory and keeps purchase records organized for easy management.
